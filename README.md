@@ -1,1 +1,3 @@
 # react-weather
+
+### `npm start`
