@@ -1,13 +1,18 @@
-import './Weather.css';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import WeatherNavbar from './navbar';
-import WeatherDisplay from './displayWeather';
-import React, { useState } from 'react';
+import './Weather.css'
+import Form from 'react-bootstrap/Form'
+import InputGroup from 'react-bootstrap/InputGroup'
+import WeatherNavbar from './navbar'
+import getWeather from './getWeather'
+import React, { useEffect, useState } from 'react'
 
 function Weather() {
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
+  const [latitude, setLatitude] = useState('')
+  const [longitude, setLongitude] = useState('')
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    getWeather(latitude, longitude).then(resp => setData(resp))
+  }, [latitude, longitude])
 
   return (
     <div className="Weather">
@@ -31,15 +36,24 @@ function Weather() {
               onChange={(e) => setLongitude(e.target.value)}
           />
         </InputGroup>
-
-
       </div>
 
       <div id="displayWeather">
-        <WeatherDisplay latitude={latitude} longitude={longitude} />
+      <div>
+        {data?.current != null ? (
+          <div>
+            <h2>Current Weather</h2>
+            <p>Temperature: {data.current.temperature_2m}°C</p>
+            <p>Wind Speed: {data.current.wind_speed_10m} m/s</p>
+          </div>
+        )
+        : null
+      }
+      </div>
+
       </div>
     </div>
-  );
+  )
 }
 
-export default Weather;
+export default Weather
