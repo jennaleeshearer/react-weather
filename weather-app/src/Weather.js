@@ -1,35 +1,49 @@
-import "./Weather.css"
 import Form from "react-bootstrap/Form"
 import WeatherNavbar from "./navbar"
 import getWeather from "./getWeather"
 import React, { useEffect, useState } from "react"
 import setCoordinates from "./setCoordinates"
+import { getUsers } from "./users";
 
 function Weather() {
-  const [latitude, setLatitude] = useState("")
-  const [longitude, setLongitude] = useState("")
-  const [data, setData] = useState(null)
+  const API_URL = 'http://localhost:3000/api/v1/weathers'; // Rails API link
+
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [data, setData] = useState(null);
+  const [users, setUsers] = useState([]); // State to store users data
 
   // Fetch weather data whenever latitude or longitude changes
   useEffect(() => {
     const fetchWeather = async () => {
       if (latitude && longitude) {
-        const weatherData = await getWeather(latitude, longitude)
-        setData(weatherData)
+        const weatherData = await getWeather(latitude, longitude);
+        setData(weatherData);
       }
-    }
+    };
 
-    fetchWeather()
-  }, [latitude, longitude])
+    fetchWeather();
+  }, [latitude, longitude]);
+
+  // Fetch all users when the component is mounted
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const usersData = await getUsers(); // Get users data
+      console.log("Users data:", usersData); // Log the users data to inspect
+      setUsers(usersData); // Set the users data in state
+    };
+
+    fetchUsers();
+  }, []); // Empty dependency array ensures this runs once after the component mounts
 
   const handleRegionChange = (e) => {
-    const value = e.target.value
+    const value = e.target.value;
     if (value !== "placeholder") {
-      const { latitude, longitude } = setCoordinates(value)
-      setLatitude(latitude)
-      setLongitude(longitude)
+      const { latitude, longitude } = setCoordinates(value);
+      setLatitude(latitude);
+      setLongitude(longitude);
     }
-  }
+  };
 
   return (
     <div className="Weather">
@@ -60,8 +74,23 @@ function Weather() {
           <p>Select a region to see the weather details.</p>
         )}
       </div>
+
+      <div id="displayUsers">
+        <h2>Users List</h2>
+        {users && users.length > 0 ? (
+          <ul>
+            {users.map((user) => (
+              <li key={user.id}>
+                {user.name} {user.surname} - {user.email} - {user.location}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Loading users...</p>
+        )}
+      </div>
     </div>
-  )
+  );
 }
 
-export default Weather
+export default Weather;

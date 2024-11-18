@@ -1,3 +1,6 @@
-# react-weather
+# Weather React-on-rails Tracker
 
-### `npm start`
+# Development
+
+Rails: `rails s`
+React: `npm start`
