@@ -89,7 +89,6 @@ function Weather() {
       <WeatherNavbar />
 
       <div className="container py-5 d-flex flex-column text-center align-items-center justify-content-center h-100">
-        <h1 className="mt-5">Current Weather</h1>
         <div className="text-center w-50 my-4">
           <Form.Select onChange={handleRegionChange}>
             <option value="placeholder">Select a Region</option>
@@ -106,26 +105,26 @@ function Weather() {
           {data && data.current ? (
             <div className="px-5 mx-5">
               <div className="row w-100">
-              <div className="col-6">
+                <div className="col-6 ps-5">
                   <div className="d-flex">
                     <i className="bi bi-geo-alt me-2"></i>
                     {regionName || "Location Name"}
                   </div>
-                  <h1>{data.current.temperature_2m}°C</h1>
+                  <h1 className="mt-3">{data.current.temperature_2m}°C</h1>
                 </div>
-                <div className="col-6 d-flex flex-column justify-conent-center">
+                <div className="col-6 d-flex flex-column justify-conent-center align-items-center">
                   {weatherImg && <img src={weatherImg} alt="Weather" width={"130px"} />}
                 </div>
               </div>
-              <div className="badge rounded-pill bg-primary me-3">
+              <div className="badge rounded-pill bg-secondary me-3">
                 <i className="bi bi-wind me-2"></i>
                 {data.current.wind_speed_10m} m/s
               </div>
-              <div className="badge rounded-pill bg-primary me-3">
+              <div className="badge rounded-pill bg-secondary me-3">
                 <i className="bi bi-cloud-drizzle me-2"></i>
                 {data.current.rain} mm
               </div>
-              <div className="badge rounded-pill bg-primary me-3">
+              <div className="badge rounded-pill bg-secondary me-3">
                 <i className="bi bi-snow me-2"></i>
                 {data.daily.snowfall_sum[0]} %
               </div>
