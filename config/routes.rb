@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only: [:create, :index, :update, :destroy]
+      get 'me', to: 'users#show_current_user'
+
     end
   end
 

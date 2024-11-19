@@ -25,7 +25,7 @@ function WeatherNavbar() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary navbar">
       <Container>
-        <Navbar.Brand href="/" className="d-flex align-items-center">
+        <Navbar.Brand href="/weather" className="d-flex align-items-center">
           <img
             src={logo}
             height="30"

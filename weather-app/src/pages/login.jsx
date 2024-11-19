@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { v4 as uuidv4 } from 'uuid'
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -24,8 +25,8 @@ export const LoginPage = () => {
         throw new Error('Invalid credentials');
       }
 
-      const data = await response.json();
-      localStorage.setItem('authToken', data.token); // Save the token in localStorage
+      const json = await response.json()
+      localStorage.setItem('authToken', json.user_id); // Save the token in localStorage
       navigate('/weather'); // Redirect to weather page
     } catch (err) {
       setError(err.message);
@@ -37,7 +38,7 @@ export const LoginPage = () => {
     if (token) {
       navigate('/weather'); // Redirect if already logged in
     }
-  }, [navigate]);
+  }, []);
 
 
   return (
