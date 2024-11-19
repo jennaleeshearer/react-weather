@@ -94,17 +94,21 @@ function Weather() {
                   {weatherImg && <img src={weatherImg} alt="Weather" width={"130px"} />}
                 </div>
               </div>
-              <div className="badge rounded-pill bg-secondary me-3">
-                <i className="bi bi-wind me-2"></i>
-                {data.current.wind_speed_10m} m/s
-              </div>
-              <div className="badge rounded-pill bg-secondary me-3">
-                <i className="bi bi-cloud-drizzle me-2"></i>
-                {data.current.rain} mm
-              </div>
-              <div className="badge rounded-pill bg-secondary me-3">
-                <i className="bi bi-snow me-2"></i>
-                {data.daily.snowfall_sum[0]} %
+              <div className="d-flex mt-4">
+                <div className="badge rounded-pill bg-secondary me-3 d-flex align-items-center justify-content-center flex-grow-1">
+                  <i className="bi bi-wind me-2 h5 my-0"></i>
+                  <h5 className="m-0">{data.current.wind_speed_10m} m/s</h5>
+                </div>
+
+                <div className="badge rounded-pill bg-secondary me-3 d-flex align-items-center justify-content-center flex-grow-1">
+                  <i className="bi bi-cloud-drizzle me-2 h5 my-0"></i>
+                  <h5 className="m-0">{data.current.rain} mm</h5>
+                </div>
+
+                <div className="badge rounded-pill bg-secondary me-3 d-flex align-items-center justify-content-center flex-grow-1">
+                  <i className="bi bi-snow me-2 h5 my-0"></i>
+                  <h5 className="m-0">{data.daily.snowfall_sum[0]} %</h5>
+                </div>
               </div>
             </div>
           ) : (

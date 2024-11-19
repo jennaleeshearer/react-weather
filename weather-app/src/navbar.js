@@ -23,7 +23,7 @@ function WeatherNavbar() {
   };
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary navbar">
+    <Navbar expand="lg" className="navbar navbar-dark" style={{backgroundColor: "#2f3c4f" }}>
       <Container>
         <Navbar.Brand href="/weather" className="d-flex align-items-center">
           <img
