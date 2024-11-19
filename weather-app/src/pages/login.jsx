@@ -25,7 +25,7 @@ export const LoginPage = () => {
       const data = await response.json();
       console.log(data); // For debugging purposes
 
-      navigate('/');
+      navigate('/weather');
     } catch (err) {
       setError(err.message);
     }

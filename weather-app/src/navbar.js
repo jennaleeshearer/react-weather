@@ -5,7 +5,7 @@ import logo from './img/logo.png';
 
 function WeatherNavbar() {
     return (
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="bg-body-tertiary navbar">
         <Container>
           <Navbar.Brand href="#home" className="d-flex align-items-center">
             <img
