@@ -9,6 +9,7 @@ function SelectRegion () {
       <option value="-33.918861, 18.423300">Cape Town</option>
       <option value="48.210033, 16.363449">Vienna</option>
       <option value="48.864716, 2.349014">Paris</option>
+      <option value="-33.865143, 151.209900">Sydney</option>
     </Form.Select>
   );
 }
