@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate } from 'react-router-dom';
@@ -40,6 +40,14 @@ const SignUp = () => {
       setError('An error occurred');
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      navigate('/weather'); // Redirect if already logged in
+    }
+  }, [navigate]);
+
 
   return (
     <div className="container w-100 h-100">
