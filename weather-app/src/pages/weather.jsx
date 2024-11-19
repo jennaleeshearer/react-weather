@@ -1,13 +1,11 @@
 import Form from "react-bootstrap/Form"
-import WeatherNavbar from "./navbar"
-import getWeather from "./getWeather"
+import WeatherNavbar from "../navbar"
+import getWeather from "../getWeather"
 import React, { useEffect, useState } from "react"
-import setCoordinates from "./setCoordinates"
-import { getUsers } from "./users";
+import setCoordinates from "../setCoordinates"
+import { getUsers } from "../users";
 
 function Weather() {
-  const API_URL = 'http://localhost:3000/api/v1/weathers'; // Rails API link
-
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [data, setData] = useState(null);
