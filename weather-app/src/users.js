@@ -1,3 +1,4 @@
+// Fetch all users from the API
 function getUsers() {
   const API_URL = 'http://localhost:3000/api/v1/users'; // API endpoint for fetching users
 
@@ -18,4 +19,25 @@ function getUsers() {
     });
 }
 
-export { getUsers };
+// Fetch the currently logged-in user's data
+async function getLoggedInUser() {
+  const API_URL = 'http://localhost:3000/api/v1/me';
+
+  try {
+    const response = await fetch(API_URL + "?uid=" + localStorage.getItem('authToken'), {
+      method: 'GET'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch logged-in user');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching logged-in user:', error);
+    throw error;
+  }
+}
+
+// Export the functions
+export { getUsers, getLoggedInUser };

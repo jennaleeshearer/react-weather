@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { v4 as uuidv4 } from 'uuid'
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate(); // Hook for navigation
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -18,18 +20,27 @@ export const LoginPage = () => {
         },
         body: JSON.stringify({ email, password }),
       });
+
       if (!response.ok) {
         throw new Error('Invalid credentials');
       }
-      // Handle successful login, e.g., save token or user info
-      const data = await response.json();
-      console.log(data); // For debugging purposes
 
-      navigate('/weather');
+      const json = await response.json()
+      localStorage.setItem('authToken', json.user_id); // Save the token in localStorage
+      navigate('/weather'); // Redirect to weather page
     } catch (err) {
       setError(err.message);
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      navigate('/weather'); // Redirect if already logged in
+    }
+  }, []);
+
+
   return (
     <div className="container w-100 h-100">
       <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100 mt-5">
@@ -56,14 +67,10 @@ export const LoginPage = () => {
                   required
                 />
               </InputGroup>
-              <div className="text-start">
-                <input type="checkbox" id="rememberMe" />
-                <label htmlFor="rememberMe" className="ps-2">
-                  {' '}
-                  Remember me
-                </label>
-              </div>
               <button type="submit" className="btn btn-primary my-3">Login</button>
+              <div>
+                <a href="/signup" className="text-black text-decoration-none">Create Account</a>
+              </div>
               <div>
                 <a href="#" className="text-black text-decoration-none">Forgot Password?</a>
               </div>

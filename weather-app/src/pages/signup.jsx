@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +31,7 @@ const SignUp = () => {
       });
 
       if (response.status === 201) {
-        navigate('/'); // Redirect on success
+        navigate('/weather'); // Redirect on success
       } else {
         const data = await response.json();
         setError(data.errors || 'An error occurred');
@@ -40,6 +40,13 @@ const SignUp = () => {
       setError('An error occurred');
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      navigate('/weather'); // Redirect if already logged in
+    }
+  }, [navigate]);
 
   return (
     <div className="container w-100 h-100">
@@ -68,7 +75,7 @@ const SignUp = () => {
               </InputGroup>
               <InputGroup className="mb-3">
                 <Form.Control
-                  name="name"          // Updated to match Rails attribute
+                  name="name"
                   placeholder="Name *"
                   value={formData.name}
                   onChange={handleChange}
@@ -76,19 +83,27 @@ const SignUp = () => {
               </InputGroup>
               <InputGroup className="mb-3">
                 <Form.Control
-                  name="surname"           // Updated to match Rails attribute
+                  name="surname"
                   placeholder="Surname *"
                   value={formData.surname}
                   onChange={handleChange}
                 />
               </InputGroup>
               <InputGroup className="mb-3">
-                <Form.Control
+                <Form.Select
                   name="location"
-                  placeholder="location *"
                   value={formData.location}
                   onChange={handleChange}
-                />
+                  required
+                >
+                  <option value="">Select a Region</option>
+                  <option value="Amsterdam">Amsterdam</option>
+                  <option value="London">London</option>
+                  <option value="Cape Town">Cape Town</option>
+                  <option value="Vienna">Vienna</option>
+                  <option value="Paris">Paris</option>
+                  <option value="Sydney">Sydney</option>
+                </Form.Select>
               </InputGroup>
               <button type="submit" className="btn btn-primary my-3">Sign Up</button>
               <div>

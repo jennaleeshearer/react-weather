@@ -1,7 +1,6 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      # Ensure user is authenticated for certain actions
       before_action :set_user, only: [:destroy, :update]
       before_action :authorize_user, only: [:destroy, :update]
 
@@ -17,8 +16,8 @@ module Api
       def login
         user = User.find_by(email: params[:email])
         if user&.authenticate(params[:password])
-          # Generate token or session (not implemented here for simplicity)
-          render json: { message: 'Login successful', user: user }, status: :ok
+          session[:user_id] = user.id  # Store user ID in the session
+          render json: { message: 'Login successful', user_id: user.id }, status: :ok
         else
           render json: { error: 'Invalid email or password' }, status: :unauthorized
         end
@@ -44,6 +43,8 @@ module Api
         end
       end
 
+      # POST /users
+      # Creates a new user
       def create
         @user = User.new(user_params)
         if @user.save
@@ -53,7 +54,42 @@ module Api
         end
       end
 
+      # GET /me
+      # Fetches the currently logged-in user
+      # Fetch the currently logged-in user
+      def show_current_user
+        if params[:uid]
+          user = User.find_by(id: params[:uid])
+          if user
+            render json: user, status: :ok
+          else
+            render json: { error: 'User not found' }, status: :not_found
+          end
+        else
+          render json: { error: 'Not logged in' }, status: :unauthorized
+        end
+      end
+
+
       private
+
+      # Retrieve current user based on token
+      # Fetches the currently logged-in user (if using session-based auth)
+      def current_user
+        @current_user ||= User.find_by(id: decoded_token[:user_id]) if decoded_token
+      end
+
+      # Decode the token
+      def decoded_token
+        return unless request.headers['Authorization']
+
+        token = request.headers['Authorization'].split(' ').last
+        begin
+          JWT.decode(token, Rails.application.secret_key_base)[0]
+        rescue JWT::DecodeError
+          nil
+        end
+      end
 
       # Find user by ID
       def set_user
@@ -69,8 +105,7 @@ module Api
 
       # Authorization placeholder (implement as needed)
       def authorize_user
-        # Placeholder for actual authorization logic (e.g., checking if current_user == @user)
-        unless true # Replace with actual condition
+        unless current_user == @user
           render json: { error: 'Not authorized' }, status: :forbidden
         end
       end
