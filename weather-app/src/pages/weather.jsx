@@ -81,7 +81,7 @@ function Weather() {
       <div className="container py-5 d-flex flex-column text-center align-items-center justify-content-center h-100">
         <div id="displayWeather" className="w-75 mt-5 px-5">
           {data && data.current ? (
-            <WeatherContent data={data} regionName={regionName} weatherImg={weatherImg} />
+            <WeatherContent data={data} regionName={regionName} weatherImg={weatherImg} /> // pass as props
           ) : (
             <p>Loading weather details for {regionName || "your location"}...</p>
           )}

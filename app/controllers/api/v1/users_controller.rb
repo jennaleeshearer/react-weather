@@ -1,7 +1,6 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :set_user, only: [:destroy, :update]
 
       # GET /users
       # Fetches all users
@@ -11,34 +10,14 @@ module Api
       end
 
       # POST /login
-      # Authenticates a user
+      # find user by email and authenticate based on the password. Store user id in the session
       def login
         user = User.find_by(email: params[:email])
         if user&.authenticate(params[:password])
-          session[:user_id] = user.id  # Store user ID in the session
+          session[:user_id] = user.id
           render json: { message: 'Login successful', user_id: user.id }, status: :ok
         else
           render json: { error: 'Invalid email or password' }, status: :unauthorized
-        end
-      end
-
-      # DELETE /users/:id
-      # Deletes a user
-      def destroy
-        if @user.destroy
-          render json: { message: 'User deleted successfully' }, status: :ok
-        else
-          render json: { error: 'Failed to delete user' }, status: :unprocessable_entity
-        end
-      end
-
-      # PUT /users/:id
-      # Updates a user
-      def update
-        if @user.update(user_params)
-          render json: { message: 'User updated successfully', user: @user }, status: :ok
-        else
-          render json: { error: 'Failed to update user', details: @user.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
@@ -55,7 +34,6 @@ module Api
 
       # GET /me
       # Fetches the currently logged-in user
-      # Fetch the currently logged-in user
       def show_current_user
         if params[:uid]
           user = User.find_by(id: params[:uid])
@@ -72,8 +50,7 @@ module Api
 
       private
 
-      # Retrieve current user based on token
-      # Fetches the currently logged-in user (if using session-based auth)
+      # Fetches the currently logged-in user
       def current_user
         @current_user ||= User.find_by(id: decoded_token[:user_id]) if decoded_token
       end
@@ -90,14 +67,7 @@ module Api
         end
       end
 
-      # Find user by ID
-      def set_user
-        @user = User.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: 'User not found' }, status: :not_found
-      end
-
-      # Strong parameters
+      # User parameters
       def user_params
         params.require(:user).permit(:name, :surname, :email, :location, :password, :password_confirmation)
       end

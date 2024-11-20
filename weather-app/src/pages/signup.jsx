@@ -88,6 +88,7 @@ const SignUp = () => {
                   placeholder="Email *"
                   value={formData.email}
                   onChange={handleChange}
+                  required
                 />
               </InputGroup>
               <InputGroup className="mb-3">
@@ -97,6 +98,7 @@ const SignUp = () => {
                   placeholder="Password *"
                   value={formData.password}
                   onChange={handleChange}
+                  required
                 />
               </InputGroup>
               <InputGroup className="mb-3">
@@ -105,6 +107,7 @@ const SignUp = () => {
                   placeholder="Name *"
                   value={formData.name}
                   onChange={handleChange}
+                  required
                 />
               </InputGroup>
               <InputGroup className="mb-3">
@@ -113,6 +116,7 @@ const SignUp = () => {
                   placeholder="Surname *"
                   value={formData.surname}
                   onChange={handleChange}
+                  required
                 />
               </InputGroup>
               <InputGroup className="mb-3">
