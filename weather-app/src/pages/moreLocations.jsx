@@ -11,10 +11,10 @@ function Weather() {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [data, setData] = useState(null);
-  const [regionName, setRegionName] = useState(""); // State to store selected region name
-  const [cloudCover, setCloudCover] = useState(null); // State to store cloud cover
-  const [snow, setSnow] = useState(null); // State to store snow cover
-  const [weatherImg, setWeatherImgSrc] = useState(null); // State to store weather image
+  const [regionName, setRegionName] = useState("");
+  const [cloudCover, setCloudCover] = useState(null);
+  const [snow, setSnow] = useState(null);
+  const [weatherImg, setWeatherImgSrc] = useState(null);
 
   // Fetch weather data whenever latitude or longitude changes
   useEffect(() => {
@@ -23,34 +23,31 @@ function Weather() {
         const weatherData = await getWeather(latitude, longitude);
         setData(weatherData);
 
-        // Extract cloud cover from weather data and set it
         if (weatherData && weatherData.current) {
-          setCloudCover(weatherData.current.cloud_cover); // Set the cloud cover state
-          setSnow(weatherData.current.snow || 0); // Set the snow state (default to 0 if undefined)
+          setCloudCover(weatherData.current.cloud_cover || 0);
+          setSnow(weatherData.current.snow || 0);
         }
       }
     };
-
     fetchWeather();
-  }, [latitude, longitude]); // Re-run when latitude or longitude changes
+  }, [latitude, longitude]);
 
-  // Update weather image based on cloud cover
+  // Update weather image
   useEffect(() => {
     if (cloudCover !== null) {
       const imageUrl = setWeatherImg(cloudCover, snow);
       setWeatherImgSrc(imageUrl);
     }
-  }, [cloudCover, snow]); // Re-run whenever cloudCover changes
+  }, [cloudCover, snow]);
 
   // Fetch all users when the component is mounted
   useEffect(() => {
     const fetchUsers = async () => {
-      const usersData = await getUsers(); // Get users data
-      console.log("Users data:", usersData); // Log the users data to inspect
+      const usersData = await getUsers();
     };
 
     fetchUsers();
-  }, []); // Empty dependency array ensures this runs once after the component mounts
+  }, []);
 
   const handleRegionChange = (e) => {
     const value = e.target.value;
@@ -80,7 +77,7 @@ function Weather() {
           setRegionName("Sydney, Australia");
           break;
         default:
-          setRegionName(""); // Clear the name if no valid region is selected
+          setRegionName("");
       }
     }
   };

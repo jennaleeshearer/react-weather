@@ -7,16 +7,16 @@ function getUsers() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      return response.json(); // Parse JSON data from the response
+      return response.json();
     })
     .then((data) => {
-      console.log('Fetched users:', data); // Log fetched users data to inspect it
-      return Array.isArray(data) ? data : []; // Ensure it's always an array
+      return Array.isArray(data) ? data : [];
     })
     .catch((error) => {
       console.error('There was a problem with the fetch operation:', error);
-      return []; // Return an empty array on error
-    });
+      return [];
+    }
+  );
 }
 
 // Fetch the currently logged-in user's data
@@ -39,5 +39,4 @@ async function getLoggedInUser() {
   }
 }
 
-// Export the functions
 export { getUsers, getLoggedInUser };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // For navigation
+import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -11,14 +11,14 @@ function WeatherNavbar() {
 
   // Check login state on component load
   useEffect(() => {
-    const token = localStorage.getItem('authToken'); // Check for token
-    setIsLoggedIn(!!token); // Update state based on token existence
+    const token = localStorage.getItem('authToken');
+    setIsLoggedIn(!!token);
   }, []);
 
   // Logout handler
   const handleLogout = () => {
-    localStorage.removeItem('authToken'); // Remove token
-    setIsLoggedIn(false); // Update state
+    localStorage.removeItem('authToken');
+    setIsLoggedIn(false);
     navigate('/login'); // Redirect to login page
   };
 

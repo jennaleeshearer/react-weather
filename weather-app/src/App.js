@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Weather from './pages/weather';
 import LoginPage from './pages/login';
 import SignUp from './pages/signup';
-import ProtectedRoute from './components/protectedRoute'; // Import the ProtectedRoute component
+import ProtectedRoute from './components/protectedRoute';
 import MoreLocations from './pages/moreLocations';
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/more_locations" element={<MoreLocations />} /> {/* New Route */}
+        <Route path="/more_locations" element={<MoreLocations />} />
 
         <Route
           path="/weather"

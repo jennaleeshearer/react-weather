@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import WeatherNavbar from "../navbar";
 import getWeather from "../getWeather";
 import setWeatherImg from "../setWeatherImg";
-import { getLoggedInUser } from "../users"; // Fetch logged-in user data
+import { getLoggedInUser } from "../users";
 
 // Mapping of city names to coordinates
 const cityCoordinates = {
@@ -17,11 +17,11 @@ const cityCoordinates = {
 function Weather() {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [regionName, setRegionName] = useState(""); // Store city name
-  const [data, setData] = useState(null); // Store weather data
-  const [cloudCover, setCloudCover] = useState(null); // Store cloud cover
-  const [snow, setSnow] = useState(null); // Store snow
-  const [weatherImg, setWeatherImgSrc] = useState(null); // Store weather image
+  const [regionName, setRegionName] = useState("");
+  const [data, setData] = useState(null);
+  const [cloudCover, setCloudCover] = useState(null);
+  const [snow, setSnow] = useState(null);
+  const [weatherImg, setWeatherImgSrc] = useState(null);
 
   // Fetch the logged-in user's data
   useEffect(() => {
@@ -29,7 +29,7 @@ function Weather() {
       try {
         const user = await getLoggedInUser(); // Fetch user data from the backend
         if (user && user.location) {
-          const city = user.location; // Assume user.location contains city name
+          const city = user.location;
           setRegionName(city);
 
           // Resolve coordinates using city name
@@ -47,7 +47,7 @@ function Weather() {
     };
 
     fetchUserData();
-  }, []); // Empty dependency array ensures this runs once after the component mounts
+  }, []);
 
   // Fetch weather data when latitude and longitude are set
   useEffect(() => {
@@ -57,16 +57,16 @@ function Weather() {
         setData(weatherData);
 
         if (weatherData && weatherData.current) {
-          setCloudCover(weatherData.current.cloud_cover); // Set the cloud cover state
-          setSnow(weatherData.current.snow || 0); // Set the snow state (default to 0 if undefined)
+          setCloudCover(weatherData.current.cloud_cover || 0);
+          setSnow(weatherData.current.snow || 0);
         }
       }
     };
 
     fetchWeather();
-  }, [latitude, longitude]); // Re-run when latitude or longitude changes
+  }, [latitude, longitude]);
 
-  // Update weather image based on cloud cover
+  // Update weather image
   useEffect(() => {
     if (cloudCover !== null) {
       const imageUrl = setWeatherImg(cloudCover, snow);
@@ -77,7 +77,6 @@ function Weather() {
   return (
     <div className="Weather text-light">
       <WeatherNavbar />
-
       <div className="container py-5 d-flex flex-column text-center align-items-center justify-content-center h-100">
         <div id="displayWeather" className="w-75 mt-5 px-5">
           {data && data.current ? (
