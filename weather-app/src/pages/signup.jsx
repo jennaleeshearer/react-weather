@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import logo from '../img/logo.png'
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -50,6 +54,28 @@ const SignUp = () => {
 
   return (
     <div className="container w-100 h-100">
+      <Navbar expand="lg" className="navbar navbar-dark" style={{backgroundColor: "#2f3c4f" }}>
+        <Container>
+          <Navbar.Brand href="/weather" className="d-flex align-items-center">
+            <img
+              src={logo}
+              height="30"
+              className="d-inline-block align-top"
+              alt="React Weather App"
+            />
+            <span className="ms-2 h3 mb-0">React Weather App</span>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <Nav.Link href="/login">
+              <i className="bi bi-person-circle me-1"></i>
+                login
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
       <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100 mt-5">
         <div className="card px-5 w-100" style={{ maxWidth: '600px' }}>
           <div className="card-body text-center">

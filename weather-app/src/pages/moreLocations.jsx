@@ -4,7 +4,6 @@ import WeatherNavbar from "../navbar";
 import getWeather from "../getWeather";
 import React, { useEffect, useState } from "react";
 import setCoordinates from "../setCoordinates";
-import { getUsers } from "../users";
 import setWeatherImg from '../setWeatherImg';
 
 function Weather() {
@@ -39,15 +38,6 @@ function Weather() {
       setWeatherImgSrc(imageUrl);
     }
   }, [cloudCover, snow]);
-
-  // Fetch all users when the component is mounted
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const usersData = await getUsers();
-    };
-
-    fetchUsers();
-  }, []);
 
   const handleRegionChange = (e) => {
     const value = e.target.value;
