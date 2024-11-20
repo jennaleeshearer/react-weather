@@ -2,7 +2,6 @@ module Api
   module V1
     class UsersController < ApplicationController
       before_action :set_user, only: [:destroy, :update]
-      before_action :authorize_user, only: [:destroy, :update]
 
       # GET /users
       # Fetches all users
@@ -101,13 +100,6 @@ module Api
       # Strong parameters
       def user_params
         params.require(:user).permit(:name, :surname, :email, :location, :password, :password_confirmation)
-      end
-
-      # Authorization placeholder (implement as needed)
-      def authorize_user
-        unless current_user == @user
-          render json: { error: 'Not authorized' }, status: :forbidden
-        end
       end
     end
   end
