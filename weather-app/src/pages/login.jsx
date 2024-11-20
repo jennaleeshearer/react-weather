@@ -71,9 +71,6 @@ export const LoginPage = () => {
               <div>
                 <a href="/signup" className="text-black text-decoration-none">Create Account</a>
               </div>
-              <div>
-                <a href="#" className="text-black text-decoration-none">Forgot Password?</a>
-              </div>
             </Form>
           </div>
         </div>
