@@ -37,8 +37,12 @@ function WeatherNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="/more_locations">
+            <Nav.Link href="/weather">
               <i className="bi bi-geo-alt-fill me-1"></i>
+              My location
+            </Nav.Link>
+            <Nav.Link href="/more_locations">
+              <i className="bi bi-search me-1"></i>
               More locations
             </Nav.Link>
             {isLoggedIn ? (
